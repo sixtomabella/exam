@@ -63,16 +63,21 @@ class vehiclemodel extends CI_Model {
     }
 
     public function AddData(){
-
+        $value = "";
         if($this->Validatedata(adddata) != false){
-            $data = array('vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power);
-            $str = $this->db->insert_string('vehicleinformation', $data);
+           $data = array('vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power);
+           $this->db->insert_string('vehicleinformation', $data);
+           $value = array('vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power, 'status' => 1);
 
         }
+        else{
+           $value = array('vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power, 'status' => 0);
+        }
 
+        return $value;
     }
 
-    public function UpdateData(){
+    public function UpdateData($var = array()){
 
     }
 
@@ -84,6 +89,16 @@ class vehiclemodel extends CI_Model {
         $val = false;
         switch($type){
             case 'adddata':
+                $array = array('vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power);
+                $this->db->select('*');
+                $this->db->from('vehicleinformation');
+                $this->db->where($array);
+                $query = $this->db->get();
+
+                if(count($query->result()) == 0){
+                    $val = true;
+                }
+
                 break;
             case 'update':
                 break;
