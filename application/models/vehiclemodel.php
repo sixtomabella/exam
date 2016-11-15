@@ -161,4 +161,26 @@ class vehiclemodel extends CI_Model {
         }
         return $val;
     }
-} 
+}
+
+/*function literstocid(form) {
+    checkIsNumb(form);
+
+    if (form.lit.value.toString()>"") {
+        form.cid.value = Math.round((form.lit.value.toString() * 61.0237441)*10)/10;
+        form.ccs.value = Math.round((form.lit.value.toString() * 1000)*10)/10;
+        return;
+    }
+
+    if (form.cid.value.toString()>"") {
+        form.lit.value = Math.round((form.cid.value.toString() / 61.0237441)*10)/10;
+        form.ccs.value = Math.round((form.lit.value.toString() * 1000)*10)/10;
+        return;
+    }
+
+    if (form.ccs.value.toString()>"") {
+        form.lit.value = Math.round((form.ccs.value.toString() / 1000)*10)/10;
+        form.cid.value = Math.round((form.lit.value.toString() * 61.0237441)*10)/10;
+        return;
+    }
+}*/
