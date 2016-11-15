@@ -16,17 +16,16 @@ class Vehicle extends CI_Controller {
     }
 
     public function Fetch(){
-       // $this->vmodel->FetchData();
-
-        $this->Dump(json_encode($this->vmodel->FetchData()));
+      $cleaneddata = $_POST;
+      json_encode($this->vmodel->FetchData());
     }
 
     public function Add()
     {
-
+        $cleaneddata = $_POST;
     }
     public function Update(){
-
+        $cleaneddata = $_POST;
     }
 
     public function Delete($id){
@@ -34,7 +33,11 @@ class Vehicle extends CI_Controller {
     }
 
     private function CleanInput($var){
-
+        $result = array();
+        foreach($var as $key => $value){
+            $result[$key] = $this->security->xss_clean($value);
+        }
+        return $result;
     }
 
     private  function Compute($var){
