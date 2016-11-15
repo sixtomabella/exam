@@ -15,8 +15,10 @@ class Vehicle extends CI_Controller {
         $this->fetch();
     }
 
-    public function Fetch($id=''){
-        $this->vmodel->FetchData();
+    public function Fetch(){
+       // $this->vmodel->FetchData();
+
+        $this->Dump(json_encode($this->vmodel->FetchData()));
     }
 
     public function Add()
@@ -35,11 +37,15 @@ class Vehicle extends CI_Controller {
 
     }
 
+    private  function Compute($var){
+
+    }
+
     public function Test(){
 
-        $array = array('vehiclename' => 'abc', 'enginedisplacement' => '200', 'unit' => '1', 'enginepower' => '200');
+        $array = array('vehiclename' => 'abc', 'enginedisplacement' => '200', 'idtype_name' => 1, 'enginepower' => '200');
         $this->db->select('*');
-        $this->db->from('vehicleinformation');
+        $this->db->from('vehicleview');
         $this->db->where($array);
         $query = $this->db->get();
 

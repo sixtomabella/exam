@@ -13,6 +13,7 @@ class vehiclemodel extends CI_Model {
      * initialize variables
      */
 
+    private  $id = '';
     private $ui = "";
     private $name = "";
     private $engine_displacement = "";
@@ -21,6 +22,11 @@ class vehiclemodel extends CI_Model {
     /**
      * create setters
      */
+
+
+    public function SetId($var){
+        $this->id = $var;
+    }
 
     public function SetUI($var){
         $this->ui = $var;
@@ -42,11 +48,15 @@ class vehiclemodel extends CI_Model {
      * create getters
      */
 
+    public function GetId(){
+        return $this->id;
+    }
+
     public function GetUI(){
         return $this->ui;
     }
 
-    public function GetName($var){
+    public function GetName(){
         return $this->name;
     }
 
@@ -54,21 +64,44 @@ class vehiclemodel extends CI_Model {
         return $this->engine_displacement;
     }
 
-    public function GetEnginePower($var){
+    public function GetEnginePower(){
         return $this->engine_power ;
     }
 
-    public function FetchData($var=''){
+    public function FetchData(){
+        $this->db->select('*');
+        $this->db->from('vehicleview');
+        if($this->GetId() != ''){
+            $this->db->where('name', $this->GetId());
+        }
+        if($this->GetUI() != ''){
+            $this->db->where('idtype_name', $this->GetId());
+        }
 
+        if($this->GetName() != ''){
+            $this->db->where('vehiclename', $this->GetName());
+        }
+
+        if($this->GetEngineDisplacement() != ''){
+            $this->db->where('enginedisplacement', $this->GetEngineDisplacement());
+        }
+
+        if($this->GetEnginePower() != ''){
+            $this->db-t>where('enginepower', $this->GetEnginePower());
+        }
+
+        $query = $this->db->get();
+
+        return $query->result();
     }
 
     public function AddData(){
         $value = "";
+
         if($this->Validatedata(adddata) != false){
            $data = array('vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power);
            $this->db->insert_string('vehicleinformation', $data);
            $value = array('vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power, 'status' => 1);
-
         }
         else{
            $value = array('vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power, 'status' => 0);
@@ -77,12 +110,24 @@ class vehiclemodel extends CI_Model {
         return $value;
     }
 
-    public function UpdateData($var = array()){
-
+    public function UpdateData(){
+        if($this->Validatedata(update) != false){
+            $data = array('vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power);
+            $this->db->where('id', $this->id);
+            $this->db->update('vehiclename', $data);
+            $value = array('id' => $this->id, 'vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power, 'status' => 1);
+        }
+        else{
+            $value = array('id' => $this->id, 'vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power, 'status' => 0);
+        }
     }
 
     public function DelData($var){
+        $data = array('deldata' => 1);
+        $this->db->where('id', $this->id);
+        $this->db->update('vehiclename', $data);
 
+        return true;
     }
 
     public function Validatedata($type){
@@ -101,6 +146,15 @@ class vehiclemodel extends CI_Model {
 
                 break;
             case 'update':
+                $array = array('id'=> $this->id, 'vehiclename' => $this->name, 'enginedisplacement' => $this->engine_displacement, 'unit' => $this->ui, 'enginepower' => $this->engine_power);
+                $this->db->select('*');
+                $this->db->from('vehicleinformation');
+                $this->db->where($array);
+                $query = $this->db->get();
+
+                if(count($query->result()) == 0){
+                    $val = true;
+                }
                 break;
             case 'deldata':
                 break;
