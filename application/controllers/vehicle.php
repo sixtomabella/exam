@@ -4,24 +4,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Vehicle extends CI_Controller {
 
+
+    function __construct() {
+        parent::__construct();
+        $this->load->model('vehiclemodel','vmodel');
+    }
+
     public function index()
     {
         $this->fetch();
     }
 
-    public function fetch($id=''){
+    public function Fetch($id=''){
+        $this->vmodel->FetchData();
+    }
+
+    public function Add()
+    {
+
+    }
+    public function Update(){
 
     }
 
-    public function add(){
+    public function Delete($id){
 
     }
 
-    public function update(){
-
-    }
-
-    public function delete($id){
+    private function CleanInput($var){
 
     }
 }
