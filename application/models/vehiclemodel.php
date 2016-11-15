@@ -164,7 +164,7 @@ class vehiclemodel extends CI_Model {
 }
 
 /*function literstocid(form) {
-    checkIsNumb(form);
+    checkIsNumb(form);.co
 
     if (form.lit.value.toString()>"") {
         form.cid.value = Math.round((form.lit.value.toString() * 61.0237441)*10)/10;
