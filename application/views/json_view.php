@@ -9,3 +9,5 @@
 // set our content-type to json
 //  note that a Content-type of application/javascript works just as well as application/json
 header('Content-Type: application/json');
+
+echo $jsondata;
