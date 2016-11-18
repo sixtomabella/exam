@@ -33,8 +33,8 @@ class Vehicle extends CI_Controller {
         $this->vmodel->SetName($cleaneddata['vehiclename']);
         $this->vmodel->SetEngineDisplacement($cleaneddata['enginedisplacement']);
         $this->vmodel->SetEnginePower($cleaneddata['enginepower']);
-        echo json_encode($this->vmodel->AddData());
-        $this->output->enable_profiler(TRUE);
+        $data['jsondata'] = $this->vmodel->AddData();
+        $this->load->view('json_view', $data);
     }
     public function Update(){
 
@@ -46,8 +46,8 @@ class Vehicle extends CI_Controller {
         $this->vmodel->SetName($cleaneddata['vehiclename']);
         $this->vmodel->SetEngineDisplacement($cleaneddata['enginedisplacement']);
         $this->vmodel->SetEnginePower($cleaneddata['enginepower']);
-        echo json_encode($this->vmodel->UpdateData());
-        $this->output->enable_profiler(TRUE);
+        $data['jsondata'] = $this->vmodel->UpdateData();
+        $this->load->view('json_view', $data);
 
     }
 
@@ -55,8 +55,8 @@ class Vehicle extends CI_Controller {
         $_POST['id'] = 2;
         $cleaneddata = $_POST;
         $this->vmodel->SetId($cleaneddata['id']);
-        echo json_encode($this->vmodel->DelData());
-        $this->output->enable_profiler(TRUE);
+        $data['jsondata'] = $this->vmodel->DelData();
+        $this->load->view('json_view', $data);
     }
 
     private function CleanInput($var){
